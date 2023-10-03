@@ -1,9 +1,5 @@
 pipeline{
     agent any
-    options{
-        buildDiscarder(logRotator(numToKeepStr: '5', daysToKeepStr: '5'))
-        timestamps()
-    }
     environment{
         
         registry = "blabir/utn-2023"
