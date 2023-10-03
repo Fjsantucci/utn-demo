@@ -1,21 +1,22 @@
-node {    
-      def app         
-      stage('Build image') {   
-            docker.withRegistry('https://registry.hub.docker.com', 'dockerhub')      
-            {
-                app = docker.build("blabir/utn-2023")
-            }
-       }     
-      stage('Test image') {           
-            app.inside {            
-             
-             sh 'echo "Tests passed"'        
-            }    
-        }     
-       stage('Push image') {
-       docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {            
-       app.push("${env.BUILD_NUMBER}")            
-       app.push("v1")        
-              }    
-           }
+pipeline {
+  environment {
+    registry = "blabir/utn-2023"
+    registryCredential = 'dockerhub'
+  }
+  agent any
+  stages {
+    stage('Building image') {
+      steps{
+        script {
+          docker.build registry + ":$BUILD_NUMBER"
         }
+      }
+    }
+  stage('Push image') {
+    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {            
+    app.push("${env.BUILD_NUMBER}")            
+    app.push("v1")        
+            }    
+        }
+  }
+}
