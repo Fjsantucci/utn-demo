@@ -8,7 +8,8 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-          docker.build(registry + ":$BUILD_NUMBER")
+          echo "$registry"
+          docker.build("blabir/utn-2023:$BUILD_NUMBER")
         }
       }
     }
