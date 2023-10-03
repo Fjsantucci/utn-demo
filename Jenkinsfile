@@ -13,7 +13,8 @@ pipeline {
                 script {
                     def dockerImageName = 'utn-2023'
                     def dockerImageTag = 'v1'
-                    
+                    // Showing Docker version
+                    sh "docker --version"
                     sh "docker build -t ${dockerImageName}:${dockerImageTag} ."
                     // docker push using my credentials
                     withDockerRegistry([credentialsId: 'dockerhub', url: '']) {
