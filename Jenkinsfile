@@ -1,7 +1,10 @@
 node {    
       def app         
-      stage('Build image') {         
-            app = docker.build("blabir/utn-2023")    
+      stage('Build image') {   
+            docker.withRegistry('https://registry.hub.docker.com', 'dockerhub')      
+            {
+                app = docker.build("blabir/utn-2023")
+            }
        }     
       stage('Test image') {           
             app.inside {            
