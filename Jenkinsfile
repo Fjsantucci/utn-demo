@@ -1,11 +1,6 @@
 node {    
-      def app     
-      stage('Clone repository') {               
-             
-            checkout scm    
-      }     
+      def app         
       stage('Build image') {         
-       
             app = docker.build("blabir/utn-2023")    
        }     
       stage('Test image') {           
@@ -15,9 +10,9 @@ node {
             }    
         }     
        stage('Push image') {
-       docker.withRegistry('https://registry.hub.docker.com', 'git') {            
+       docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {            
        app.push("${env.BUILD_NUMBER}")            
-       app.push("latest")        
+       app.push("v1")        
               }    
            }
         }
